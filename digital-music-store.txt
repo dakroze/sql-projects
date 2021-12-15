@@ -1,0 +1,36 @@
+/* Qeury 1 */
+SELECT  a.name ArtistName,SUM( il.UnitPrice*il.Quantity) AmountSpent
+FROM Artist a
+JOIN Album ab
+ON a.ArtistId = ab.ArtistId
+JOIN Track t
+ON t.AlbumId = ab.AlbumId
+JOIN InvoiceLine il
+ON il.TrackId = t.TrackId
+GROUP BY a.ArtistId
+ORDER BY AmountSpent DESC
+LIMIT 10;
+
+/* Query 2 */
+SELECT  c.FirstName||' '||c.LastName Customer_Name,SUM(i.total)Amount_Spent
+FROM Invoice i
+JOIN Customer c
+ON c.CustomerId = i.CustomerId
+GROUP BY c.CustomerId
+ORDER BY Amount_Spent DESC
+LIMIT 10;
+
+/* Query 3 */
+SELECT  c.Country, SUM(i.total) Revenue
+FROM Invoice i
+JOIN Customer c
+ON c.CustomerId = i.CustomerId
+GROUP BY c.Country
+ORDER BY Revenue DESC;
+
+/* Query 4 */
+SELECT  strftime('%Y-%m',i.invoiceDate)SalesMonth, SUM(i.total) Revenue
+FROM Invoice i
+JOIN Customer c
+ON c.CustomerId = i.CustomerId
+GROUP BY SalesMonth;
